@@ -1,0 +1,15 @@
+Strongwind is a GUI test automation framework inspired by dogtail.  Strongwind
+is object-oriented and extensible. You can use Strongwind to build
+object-oriented representations of your applications ("application wrappers"),
+then reuse the application wrappers to quickly develop many test scripts.
+Strongwind scripts generate a human-readable log that contains the action,
+expected result and a screen shot of each step.  Most simple actions are logged
+automatically.
+
+Strongwind is written in Python and uses the pyatspi library to manipulate and
+query the state of applications. Strongwind automatically classifies widgets by
+their ATK role. By default, Strongwind provides implementations for common
+actions on regular widgets -- for example, selecting an item in a menu or
+asserting that a window has closed -- but you can extend Strongwind's
+implementations or add your own implementations for custom widgets to handle
+alternate behaviors or custom widgets in your applications.
