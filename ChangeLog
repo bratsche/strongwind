@@ -1,3 +1,23 @@
+2007-10-22  Jonathan Tai  <jon@tgpsolutions.com>
+	
+	* strongwind/accessibles.py:
+	(PageTab): change the behavior of select() and findPageTab() to be more
+	in line with what other classes do
+	(Text): remove commented-out __str__() function
+
+	* strongwind/accessibles.py:
+	* strongwind/watchdog.py:
+	* strongwind/cache.py: 
+	replace tabs with 8 spaces in a few spots where tabs snuck in 
+
+	* resources: add a resources folder with sample XSL and CSS for viewing
+	XML test results
+
+	* AUTHORS: add an AUTHORS file to give credit to Bailey Kong and Raul
+	Jimenez
+
+	* Take over maintainership of Strongwind
+
 2007-10-19  Brad Taylor  <brad@getcoded.net>
 	
 	* Initial import

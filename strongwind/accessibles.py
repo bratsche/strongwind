@@ -201,8 +201,8 @@ class Accessible(object):
                         # the name of the class to look for is 'PreferencesDialog'
                         className = utils.toClassName(logName) + utils.toClassName(y.roleName)
 
-			# the module prefix is the module of this class.  so if we had a widget that had 
-			# a class medsphere.openvistacis.OpenVistaCIS, and we call findDialog('Preferences') 
+                        # the module prefix is the module of this class.  so if we had a widget that had 
+                        # a class medsphere.openvistacis.OpenVistaCIS, and we call findDialog('Preferences') 
                         # on it, the module prefix would be medsphere.openvistacis.  we append the name of 
                         # the class we're looking for to the module prefix to get the name of the module.
                         # so continuing with the example, the full module name would be 
@@ -217,7 +217,7 @@ class Accessible(object):
                             z = klass(y)
                             cache.addWidget(z)
                         except (ImportError, KeyError):
-			    # if the found widget's logName isn't the same as the logName 
+                            # if the found widget's logName isn't the same as the logName 
                             # we were given, set the widget's logName and cache the widget
                             if y.name != logName:
                                 y.logName = logName
@@ -746,45 +746,33 @@ class PageTabList(Accessible):
             if child.selected:
                 return child
 
-    def findPageTab(self, name, logName=None, retry=True, raiseException=True, setReference=True, log=True):
+    def findPageTab(self, name, logName=None, retry=True, raiseException=True, setReference=True):
         'Search for a page tab'
 
-        func = self.__getattr__('findPageTab')
-        tab = func(name, logName=logName, retry=retry, recursive=False, raiseException=raiseException, setReference=setReference)
-
-        if log: # we need to log after the find() because the tab might be promoted and have a different logName
-            procedurelogger.expectedResult('The %s is selected.' % tab)
-
-        return tab
+        # for performance, don't search for pageTabs recursively; set a reference to the page tab (if/when found) by default
+        return self.__getattr__('findPageTab')(name, logName=logName, retry=retry, recursive=False, raiseException=raiseException, setReference=setReference)
 
     def select(self, name, logName=None, log=True):
         'Select a tab'
 
-        # first do a "bare" search for the tab.  we don't use self.findPageTab
-        # because findPageTab tries to promote tabs to specific classes which
-        # may have constructors that look for widgets that are lazy-loaded, 
-        # causing bogus searchErrors.
+        # we don't use self.findPageTab or self.__getattr__('findPageTab') 
+        # here because findPageTab tries to promote tabs to specific classes 
+        # which may have constructors that look for widgets that are 
+        # lazy-loaded, causing bogus searchErrors.
         tab = utils.findDescendant(self, lambda x: x.role == pyatspi.ROLE_PAGE_TAB and utils.equalsOrMatches(x.name, name) and x.showing, \
             recursive=False)
 
-        # check to see if this tab is already the selected tab
-        currentTab = self.getCurrentPage()
-        alreadySelected = hash(tab._accessible) == hash(currentTab._accessible)
-
         # do the work of actually selecting the tab.  this should cause
         # lazy-loaded widgets to be loaded.
-        if not alreadySelected:
-            self.selectChild(tab.getIndexInParent())
+        self.selectChild(tab.getIndexInParent())
 
         # now search for the tab as if we haven't done any of the above, but 
         # don't do any logging
-        tab = self.findPageTab(name, logName=logName, log=False)
+        tab = self.findPageTab(name, logName=logName)
 
         # now that we have the (possibly promoted) tab, do the logging
         if log: # we need to log after the find() because the tab might be promoted and have a different logName
-            if not alreadySelected:
-                procedurelogger.action('Select the %s.' % tab, self)
-            procedurelogger.expectedResult('The %s is selected.' % tab)
+            procedurelogger.action('Select the %s.' % tab, self)
 
         sleep(config.MEDIUM_DELAY)
 
@@ -891,7 +879,7 @@ class TableCell(Accessible):
         '''
         Click the table cell
 
-	If the table cell is editable, this should trigger the "edit mode".  If
+        If the table cell is editable, this should trigger the "edit mode".  If
         you just want to select the table cell, use select() instead.
         '''
 
@@ -922,9 +910,6 @@ class CheckBox(Button):
     pass
 
 class Text(Accessible):
-    #def __str__(self):
-    #    return self.text
-
     def enterText(self, text, log=True):
         'Enter text'
 

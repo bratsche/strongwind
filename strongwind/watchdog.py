@@ -80,8 +80,8 @@ def _watchdog():
     def exit(message):
         sys.stderr.write(message + '\n')
 
-	# _exit() exits "without calling cleanup handlers, flushing stdio buffers, 
-	# etc.", so we have to tell procedurelogger to save its log explicitly
+        # _exit() exits "without calling cleanup handlers, flushing stdio buffers, 
+        # etc.", so we have to tell procedurelogger to save its log explicitly
         procedurelogger.save()
         os._exit(1)
 

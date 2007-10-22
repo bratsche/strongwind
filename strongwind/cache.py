@@ -198,7 +198,7 @@ def launchApplication(args=[], name=None, find=None, cwd=None, env=None, wait=co
         '''
         Find the application with the largest id whose name matches find
 
-	If ids are not recycled (i.e., ids always increment and never start
+        If ids are not recycled (i.e., ids always increment and never start
         over again at 1), the application with the highest id will be the last
         launched.  We're making this assumption.
         '''
@@ -232,10 +232,10 @@ def launchApplication(args=[], name=None, find=None, cwd=None, env=None, wait=co
         '''
         Find the application we just launched
 
-	If there is an existing application, make sure the app we find here has
+        If there is an existing application, make sure the app we find here has
         an id larger than the existing application.
 
-	If no application is found, wait and retry a number of times before
+        If no application is found, wait and retry a number of times before
         returning None. 
         '''
         for i in xrange(config.RETRY_TIMES):
