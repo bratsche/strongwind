@@ -17,20 +17,16 @@ app.calculatorFrame.changeMode('Scientific')
 app.calculatorFrame.changeMode('Basic')
 
 app.calculatorFrame.findPushButton('Numeric 1').click()
-sleep(config.SHORT_DELAY)
-app.calculatorFrame.changeMode('Advanced')
+app.calculatorFrame.changeMode('Advanced', expectChangeModeDialog=True)
 
 app.calculatorFrame.findPushButton('Numeric 2').click()
-sleep(config.SHORT_DELAY)
-app.calculatorFrame.changeMode('Financial')
+app.calculatorFrame.changeMode('Financial', expectChangeModeDialog=True)
 
 app.calculatorFrame.findPushButton('Numeric 3').click()
-sleep(config.SHORT_DELAY)
-app.calculatorFrame.changeMode('Scientific')
+app.calculatorFrame.changeMode('Scientific', expectChangeModeDialog=True)
 
 app.calculatorFrame.findPushButton('Numeric 4').click()
-sleep(config.SHORT_DELAY)
-app.calculatorFrame.changeMode('Basic')
+app.calculatorFrame.changeMode('Basic', expectChangeModeDialog=True)
 
 app.calculatorFrame.quit()
 

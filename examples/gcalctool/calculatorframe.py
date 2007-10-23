@@ -9,6 +9,7 @@ class CalculatorFrame(accessibles.Frame):
     def __init__(self, accessible):
         super(CalculatorFrame, self).__init__(accessible)
 
+        # get a reference to commonly-used child widgets
         self.menuBar = self.findMenuBar('')
         self.resultRegion = self.findEditbar('')
 
@@ -22,19 +23,28 @@ class CalculatorFrame(accessibles.Frame):
 
         assert retryUntilTrue(resultMatches)
 
-    def changeMode(self, mode):
+    def changeMode(self, mode, expectChangeModeDialog=False, assertModeChanged=True):
         '''
         Change the mode
 
         Mode can be one of: Basic, Advanced, Financial, or Scientific.
         '''
 
+        if expectChangeModeDialog:
+            sleep(config.SHORT_DELAY)
+
         self.menuBar.select(['View', mode])
 
-        if self.resultRegion.text != '0': # FIXME: if we're already on this mode, the dialog won't pop up
+        if expectChangeModeDialog:
             self.app.findDialog(None, logName='Changing Modes Clears Calculation')._clickPushButton('Change Mode')
 
-        procedurelogger.expectedResult('The mode changes to %s mode.' % mode)
+        if assertModeChanged:
+            procedurelogger.expectedResult('The mode changes to %s mode and the result region displays 0.' % mode)
+
+            def modeChanged():
+                return self.menuBar.findMenu('View').findCheckMenuItem(mode).checked and self.resultRegion.text == '0'
+
+            assert retryUntilTrue(modeChanged)
 
     def quit(self):
         'Quit gcalctool'
@@ -46,5 +56,6 @@ class CalculatorFrame(accessibles.Frame):
     def assertClosed(self):
         super(CalculatorFrame, self).assertClosed()
 
+        # if the calculator window closes, the entire app should close.  assert that this is true 
         self.app.assertClosed()
 

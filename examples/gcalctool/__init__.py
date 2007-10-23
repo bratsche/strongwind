@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+'Application wrapper for gcalctool'
+
 from strongwind import *
 
 import os
 
 def launchGcalctool(exe=None):
-    "Launch gcalctool with accessibility enabled and return a Gcalctool object"
+    'Launch gcalctool with accessibility enabled and return a Gcalctool object'
 
     if exe is None:
         exe = '/usr/bin/gcalctool'

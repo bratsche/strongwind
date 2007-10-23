@@ -31,6 +31,14 @@ import utils
 import cache
 
 class Accessible(object):
+    '''
+    A generic Accessible
+
+    Subclasses of this class in this module provide additional functionality
+    specific to certain ATK roles. (e.g., the MenuBar provides a select()
+    method that this generic Accessible does not provide)
+    '''
+
     def __init__(self, accessible):
         '''
         Constructor for strongwind.accessibles.Accessible
@@ -291,16 +299,16 @@ class Accessible(object):
         'Creates a logName representation of this Accessible (ie. Zoom In button)'
 
         translations = {
-            'ROLE_FRAME': 'window',
-            'ROLE_MENU_ITEM': 'menu option',
-            'ROLE_PAGE_TAB': 'tab',
-            'ROLE_PANEL': 'section',
-            'ROLE_PUSH_BUTTON': 'button',
-            'ROLE_TABLE': 'list',
-            'ROLE_TABLE_CELL': '',
-            'ROLE_TEXT': 'text field',
-            'ROLE_TOOL_BAR': 'toolbar',
-            'ROLE_WINDOW': 'context menu'}
+            pyatspi.ROLE_FRAME: 'window',
+            pyatspi.ROLE_MENU_ITEM: 'menu option',
+            pyatspi.ROLE_PAGE_TAB: 'tab',
+            pyatspi.ROLE_PANEL: 'section',
+            pyatspi.ROLE_PUSH_BUTTON: 'button',
+            pyatspi.ROLE_TABLE: 'list',
+            pyatspi.ROLE_TABLE_CELL: '',
+            pyatspi.ROLE_TEXT: 'text field',
+            pyatspi.ROLE_TOOL_BAR: 'toolbar',
+            pyatspi.ROLE_WINDOW: 'context menu'}
 
         try:
             name = self.logName
@@ -315,7 +323,7 @@ class Accessible(object):
         name = name.replace('/\n','/').replace('\n',' ')
 
         try:
-            roleName = translations[repr(self.role)]
+            roleName = translations[self.role]
         except KeyError:
             roleName = self.roleName
 
@@ -631,6 +639,13 @@ class Application(Accessible):
             assert utils.retryUntilTrue(closed)
 
 class Frame(Accessible):
+    # often, when a window is closed, the application closes.  the assertClosed
+    # method needs the role and roleName properties to do its logging, so
+    # ensure that those properties are available, even if the underlying
+    # _accessible object goes away
+    role = pyatspi.ROLE_FRAME
+    roleName = 'Frame'
+
     def altF4(self, assertClosed=True):
         'Press <Alt>F4'
 

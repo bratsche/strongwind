@@ -1,3 +1,19 @@
+2007-10-23  Jonathan Tai  <jon@tgpsolutions.com>
+
+	* strongwind/accessibles.py:
+	fix a LookupError that can occur when test scripts exit
+
+	* examples/gcalctool-bug-488226.py:
+	add a test for GNOME bugzilla bug #488226
+
+	* examples/gcalctool/calculatorframe.py:
+	(CalculatorFrame.changeMode): don't try to guess if the Change Mode
+	dialog will appear or not; let the test specify whether or not it's
+	expecting the dialog
+
+	* examples/gcalctool-changing-modes.py:
+	take advantage of changes in app wrapper
+
 2007-10-22  Jonathan Tai  <jon@tgpsolutions.com>
 	
 	* strongwind/accessibles.py:
