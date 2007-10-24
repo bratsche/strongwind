@@ -1,3 +1,11 @@
+2007-10-24  Brad Taylor  <brad@getcoded.net>
+	
+	* AUTHORS:
+	* resources/procedures.xsl:
+	* resources/strongwind.png:
+	* resources/strongwind.svg: Add Strongwind's logo, drawn by Andreas
+	  Nilsson <andreas@andreasn.se>.
+
 2007-10-24  Jonathan Tai  <jon@tgpsolutions.com>
 
 	* strongwind/__init__.py:

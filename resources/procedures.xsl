@@ -8,6 +8,7 @@
     </head>
     <body>
       <p class="header">
+        <img src="strongwind.png" width="182" height="172" alt="Strongwind"/><br/><br/>
         <span id="testName"><xsl:value-of select="test/name"/></span><br/>
         <span id="documentName">Strongwind Test Script</span><br/>
         <span id="testDescription"><xsl:value-of select="test/description"/></span><br/>
