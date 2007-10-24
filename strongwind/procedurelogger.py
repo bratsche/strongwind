@@ -22,10 +22,10 @@ Log test procedures in a human-readable format
 
 The basic pattern for a strongwind test is to do the following:
 
-    procedures.action('Do something.')
+    procedurelogger.action('Do something.')
     app.widget.findOtherWidget('Other widget').doAction('something')
 
-    procedures.expectedResult('The application reacts to the action.')
+    procedurelogger.expectedResult('The application reacts to the action.')
     app.widget.assertWidgetReacted()
 
 Notice that calls to the procedure logger occur *before* actually performing

@@ -16,7 +16,7 @@ class CalculatorFrame(accessibles.Frame):
     def assertResult(self, result):
         'Raise an exception if the result region does not match the given result'
 
-        procedures.expectedResult('The result region displays %s.' % result)
+        procedurelogger.expectedResult('The result region displays %s.' % result)
 
         def resultMatches():
             return self.resultRegion.text == str(result)

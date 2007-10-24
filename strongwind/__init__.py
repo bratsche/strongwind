@@ -30,7 +30,7 @@ automatically.
 
 import config
 
-import procedurelogger as procedures
+import procedurelogger
 import watchdog
 import cache
 

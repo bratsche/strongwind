@@ -1,3 +1,15 @@
+2007-10-24  Jonathan Tai  <jon@tgpsolutions.com>
+
+	* strongwind/__init__.py:
+	import procedurelogger as procedurelogger, not as procedures
+
+	* strongwind/procedurelogger.py:
+	* examples/gcalctool/calculatorframe.py:
+	updates to reflect procedurelogger => procedures change
+
+	* strongwind/watchdog.py:
+	add documentation from the tutorial I'm writing
+
 2007-10-23  Jonathan Tai  <jon@tgpsolutions.com>
 
 	* strongwind/accessibles.py:

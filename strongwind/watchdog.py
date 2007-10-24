@@ -26,6 +26,18 @@ seconds.  Calling resetTimeout() will reset to the counter to 0;
 this is done automatically by procedurelogger.action().  If the 
 counter is allowed to reach config.WATCHDOG_TIMEOUT, test script 
 execution is aborted.
+
+Typically, application failures will cause some other aspect of 
+the test to fail before the watchdog kicks in.  (e.g., a dialog 
+is supposed to appear, but it cannot be found, so the test fails)  
+However, applications can sometimes hang in a way that causes a 
+pyatspi call to hang.  In this case, the main Strongwind thread 
+will hang waiting for the pyatspi call to return - this is
+when the watchdog would step in and kill the test script.
+
+The watchdog is most useful when running a batch of Strongwind 
+tests unattended.  If one test hangs, it will eventually be killed 
+by the watchdog so that other tests can be run.
 '''
 
 import os
