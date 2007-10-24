@@ -1,4 +1,9 @@
 2007-10-24  Brad Taylor  <brad@getcoded.net>
+
+	* resources/procedures.xsl: Make the Strongwind logo a link to
+	  Strongwind's project page.
+
+2007-10-24  Brad Taylor  <brad@getcoded.net>
 	
 	* AUTHORS:
 	* resources/procedures.xsl:
