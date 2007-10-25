@@ -706,7 +706,7 @@ class Dialog(Accessible):
         def closed():
             try:
                 return not self.showing
-            except LookupError:
+            except (LookupError, KeyError, pyatspi.ORBit.CORBA.COMM_FAILURE):
                 return True
 
         assert utils.retryUntilTrue(closed)
@@ -743,7 +743,13 @@ class Alert(Accessible):
 
         procedurelogger.expectedResult('The %s disappears.' % self)
 
-        assert utils.retryUntilTrue(lambda: not self.showing)
+        def closed():
+            try:
+                return not self.showing
+            except (LookupError, KeyError, pyatspi.ORBit.CORBA.COMM_FAILURE):
+                return True
+
+        assert utils.retryUntilTrue(closed)
 
 class PageTabList(Accessible):
     def getPageTabNames(self):

@@ -1,3 +1,10 @@
+2007-10-25  Jonathan Tai  <jon@tgpsolutions.com>
+
+	* strongwind/accessibles.py:
+	(Dialog.assertClosed):
+	(Alert.assertClosed):
+	handle CORBA.COMM_FAILURE like Frame's assertClosed() does
+
 2007-10-24  Brad Taylor  <brad@getcoded.net>
 
 	* resources/procedures.xsl: Make the Strongwind logo a link to
