@@ -671,19 +671,19 @@ class Dialog(Accessible):
     def ok(self, assertClosed=True):
         'Click the OK button'
 
-        self._clickPushButton('OK', assertClosed=assertClosed)
+        self.clickPushButton('OK', assertClosed=assertClosed)
 
     def cancel(self, assertClosed=True):
         'Click the Cancel button'
 
-        self._clickPushButton('Cancel', assertClosed=assertClosed)
+        self.clickPushButton('Cancel', assertClosed=assertClosed)
 
     def close(self, assertClosed=True):
         'Click the Close button'
 
-        self._clickPushButton('Close', assertClosed=assertClosed)
+        self.clickPushButton('Close', assertClosed=assertClosed)
 
-    def _clickPushButton(self, name, assertClosed=True):
+    def clickPushButton(self, name, assertClosed=True):
         'Click a button and optionally assert that the dialog closes'
 
         self.findPushButton(name).click()

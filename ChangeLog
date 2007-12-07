@@ -1,5 +1,10 @@
 2007-12-07  Brad Taylor  <brad@getcoded.net>
 	
+	* strongwind/accessibles.py: Promote _clickPushButton in Dialog to
+	  make the API more consistent with Alert.
+
+2007-12-07  Brad Taylor  <brad@getcoded.net>
+	
 	* strongwind/accessibles.py: Add cancel() to the Alert class.  I don't
 	  know why this wasn't in there to start with...  Also, promote
 	  _clickPushButton to being "public", as the HIG suggests that dialogs
