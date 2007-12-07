@@ -1,3 +1,10 @@
+2007-12-07  Brad Taylor  <brad@getcoded.net>
+	
+	* strongwind/accessibles.py: Add cancel() to the Alert class.  I don't
+	  know why this wasn't in there to start with...  Also, promote
+	  _clickPushButton to being "public", as the HIG suggests that dialogs
+	  use an action word instead of just Ok for affirmative alert buttons.
+
 2007-10-29  Jonathan Tai  <jon@tgpsolutions.com>
 
 	* MAINTAINERS:

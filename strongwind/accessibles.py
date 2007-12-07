@@ -719,19 +719,24 @@ class Alert(Accessible):
     def ok(self, assertClosed=True):
         'Click the OK button'
 
-        self._clickPushButton('OK', assertClosed=assertClosed)
+        self.clickPushButton('OK', assertClosed=assertClosed)
+
+    def cancel(self, assertClosed=True):
+        'Click the Cancel button'
+        
+        self.clickPushButton('Cancel', assertClosed=assertClosed)
 
     def yes(self, assertClosed=True):
         'Click the Yes button'
 
-        self._clickPushButton('Yes', assertClosed=assertClosed)
+        self.clickPushButton('Yes', assertClosed=assertClosed)
 
     def no(self, assertClosed=True):
         'Click the No button'
 
-        self._clickPushButton('No', assertClosed=assertClosed)
+        self.clickPushButton('No', assertClosed=assertClosed)
 
-    def _clickPushButton(self, name, assertClosed=True):
+    def clickPushButton(self, name, assertClosed=True):
         'Click a button and optionally assert that the alert closes'
 
         self.findPushButton(name).click()
