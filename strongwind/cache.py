@@ -168,6 +168,21 @@ def launchApplication(args=[], name=None, find=None, cwd=None, env=None, wait=co
     '''
     Launch an application with accessibility enabled
 
+    args, cwd, and env are passed to subprocess.Popen.  If cwd is not specified, it
+    defaults to os.cwd().  If env is not specified, it defaults to os.environ, plus
+    GTK_MODULES='gail:atk-bridge'
+
+    After launching the application, a reference to the
+    strongwind.accessibles.Application is cached.  The "name" argument to this
+    method is used to find the accessible that should be promoted to a
+    strongwind.accessibles.Application.  The name is also used to refer to the
+    application in the test procedures log.  If name is not specified, it defaults
+    to the basename of args[0] with any file extension stripped.  
+
+    If the accessible name of the application is not fixed, the "find" argument can
+    be used to search for a pattern.  If find is not specified, it defaults to
+    re.compile('^' + name)
+
     Returns a tuple containing a strongwind.accessibles.Application 
     object and a Popen object.
     '''
