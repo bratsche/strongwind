@@ -759,7 +759,7 @@ class Alert(Accessible):
 class PageTabList(Accessible):
     def getPageTabNames(self):
         'Returns the string name of all the page tabs'
-
+    
         names = []
         for child in self:
             names.append(child.name)
@@ -804,8 +804,32 @@ class PageTabList(Accessible):
 
         return tab
 
-class PageTab(Accessible): # keep this around in case we want to add to it someday; application wrappers around tabs should extend from this class
-    pass
+class PageTab(Accessible): # application wrappers around tabs should extend from this class
+    def select(self, log=True):
+        '''
+        Select the page tab
+
+        This method should not be used to initially select a tab; PageTabList.select()
+        should be used instead.  Using PageTabList.findPageTab() may cause bogus search
+        errors if the tab's class's constructor looks for sub-widgets and that are
+        lazy-loaded.
+        '''
+
+        if log:
+            procedurelogger.action('Select the %s.' % self, self.parent)
+
+        self.parent.selectChild(self.getIndexInParent())
+
+    def assertSelected(self, log=True):
+        'Raise an exception if this tab is not selected'
+
+        if log:
+            procedurelogger.expectedResult('The %s is selected.' % self)
+
+        def selected():
+            return self.selected
+
+        assert utils.retryUntilTrue(selected)
 
 class Table(Accessible):
     def __getattr__(self, attr):
@@ -879,6 +903,17 @@ class TableCell(Accessible):
             procedurelogger.action('Select %s.' % self, self)
 
         self.grabFocus()
+
+    def assertSelected(self, log=True):
+        'Raise an exception if this tab is not selected'
+
+        if log:
+            procedurelogger.expectedResult('%s is selected.' % self)
+
+        def selected():
+            return self.selected
+
+        assert utils.retryUntilTrue(selected)
 
     def activate(self, log=True):
         'Activate (double-click) the table cell'

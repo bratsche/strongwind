@@ -1,3 +1,8 @@
+2008-01-07  Jonathan Tai  <jon@tgpsolutions.com>
+
+	* strongwind/accessibles.py: Add select() to the PageTab class; add
+	  assertSelected() to the PageTab and TableCell classes.
+
 2007-12-07  Brad Taylor  <brad@getcoded.net>
 	
 	* strongwind/accessibles.py: Promote _clickPushButton in Dialog to
