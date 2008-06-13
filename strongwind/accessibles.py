@@ -667,6 +667,16 @@ class Frame(Accessible):
 
         assert utils.retryUntilTrue(closed)
 
+    def grabFocus(self):
+        '''
+        Frames are not focusable, so emulate the behavior by finding the first
+        focusable child of this Frame and calling grabFocus on it
+        '''
+        try:
+            utils.findDescendant(self, lambda x: x.focusable and x.showing).grabFocus()
+        except:
+            pass
+
 class Dialog(Accessible):
     def ok(self, assertClosed=True):
         'Click the OK button'
@@ -710,6 +720,16 @@ class Dialog(Accessible):
                 return True
 
         assert utils.retryUntilTrue(closed)
+
+    def grabFocus(self):
+        '''
+        Dialogs are not focusable, so emulate the behavior by finding the first
+        focusable child of this Dialog and calling grabFocus on it
+        '''
+        try:
+            utils.findDescendant(self, lambda x: x.focusable and x.showing).grabFocus()
+        except:
+            pass
 
 class Alert(Accessible):
     def __init__(self, accessible):
