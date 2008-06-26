@@ -1,3 +1,9 @@
+2008-06-26  Brad Taylor  <brad@getcoded.net>
+	
+	* strongwind/accessibles.py: Add an overload to keyCombo to control
+	  whether we grabFocus first or not.  This is especially important when
+	  you're trying to control focus with keyCombo.
+
 2008-06-12  Brad Taylor  <brad@getcoded.net>
 	
 	* strongwind/accessibles.py: Implement grabFocus for Dialog and Frame.

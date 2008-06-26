@@ -376,7 +376,7 @@ class Accessible(object):
             pyatspi.Registry.generateKeyboardEvent(key, None, pyatspi.KEY_SYM)
 
     # adapted from script_playback.py
-    def keyCombo(self, combo):
+    def keyCombo(self, combo, grabFocus=True):
         'Focus this Accessible and press a combination of keys simultaneously'
 
         import gtk.gdk
@@ -412,11 +412,12 @@ class Accessible(object):
                 keys.append(key)
 
         modifiers = map(ModifierKeyCodes.get, keys[:-1])
-
-        try:
-            self.grabFocus()
-        except:
-            pass
+        
+        if grabFocus:
+            try:
+                self.grabFocus()
+            except:
+                pass
 
         sleep(config.SHORT_DELAY)
 
