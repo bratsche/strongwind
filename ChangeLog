@@ -1,5 +1,11 @@
 2008-07-10  Jonathan Tai  <jon@tgpsolutions.com>
 
+	* strongwind/accessibles.py: Have PushButton override __getattr__() to
+	  provide an imageSize attributes so we can query the size of images
+	  within buttons.  (#542483, César Octavio López Natarén)
+
+2008-07-10  Jonathan Tai  <jon@tgpsolutions.com>
+
 	* strongwind/accessibles.py: Override select() and activate() in
 	  TreeTable class to handle lazy loaded cells.  Also add an
 	  expandOrContract() convenience method to the TableCell class.

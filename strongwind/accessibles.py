@@ -1010,7 +1010,10 @@ class Button(Accessible): # ROLE_BUTTON doesn't actually exist, this is just use
         super(Button, self).click()
 
 class PushButton(Button):
-    pass
+    def __getattr__(self, attr):
+        if attr == 'imageSize':
+            return self._accessible.queryImage().getImageSize()
+        else: return super(PushButton, self).__getattr__(attr)
 
 class RadioButton(Button):
     pass
