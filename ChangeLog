@@ -1,3 +1,10 @@
+2008-07-10  Jonathan Tai  <jon@tgpsolutions.com>
+
+	* strongwind/accessibles.py: Override select() and activate() in
+	  TreeTable class to handle lazy loaded cells.  Also add an
+	  expandOrContract() convenience method to the TableCell class.
+	  (#542479, César Octavio López Natarén)
+
 2008-06-26  Brad Taylor  <brad@getcoded.net>
 	
 	* strongwind/accessibles.py: Add an overload to keyCombo to control

@@ -916,6 +916,33 @@ class Table(Accessible):
 
         self.__getattr__('assertNoTableCell')(name, checkShowing=checkShowing, retry=retry, recursive=recursive, breadthFirst=breadthFirst, raiseException=raiseException)
 
+class TreeTable(Table):
+    def select(self, path):
+        '''
+        Select a table cell
+
+        Path must be an array of strings, regular expressions are not supported.
+        '''
+
+        for row in path[0:-1]:
+            sleep(config.MEDIUM_DELAY)
+            super(TreeTable, self).select(row).expandOrContract()
+
+        return super(TreeTable, self).select(path[-1])
+
+    def activate(self, path):
+        '''
+        Activate a table cell
+
+        Path must be an array of strings, regular expressions are not supported.
+        '''
+
+        for row in path[0:-1]:
+            sleep(config.MEDIUM_DELAY)
+            super(TreeTable, self).select(row).expandOrContract()
+
+        return super(TreeTable, self).activate(path[-1])
+
 class TableCell(Accessible):
     def select(self, log=True):
         'Select the table cell'
@@ -970,8 +997,8 @@ class TableCell(Accessible):
 
         super(TableCell, self).mouseClick(button=button, xOffset=xOffset, yOffset=yOffset)
 
-class TreeTable(Table):
-    pass
+    def expandOrContract(self):
+        self._doAction('expand or contract')
 
 class Button(Accessible): # ROLE_BUTTON doesn't actually exist, this is just used as a base class for the following classes
     def click(self, log=True):
