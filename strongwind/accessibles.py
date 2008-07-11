@@ -1039,7 +1039,8 @@ class MenuBar(Accessible):
 
         parent = self
         for menu in path:
-            parent = parent.findMenu(menu, recursive=False)
+            parent = utils.findDescendant(parent, lambda x: (x.role == pyatspi.ROLE_MENU or x.role == pyatspi.ROLE_MENU_ITEM) and \
+                utils.equalsOrMatches(x.name, menu) and x.showing, recursive=False)
             parent.click() # open the menu so that the children are showing
 
         return parent # return the last menu
@@ -1056,8 +1057,8 @@ class MenuBar(Accessible):
 
         parent = self._open(path[0:-1]) # the last item in the path is excluded because we're going to click that item
 
-        item = utils.findDescendant(parent, lambda x: (x.role == pyatspi.ROLE_MENU_ITEM or x.role == pyatspi.ROLE_CHECK_MENU_ITEM) \
-            and utils.equalsOrMatches(x.name, path[-1]) and x.showing, recursive=False)
+        item = utils.findDescendant(parent, lambda x: (x.role == pyatspi.ROLE_MENU_ITEM or x.role == pyatspi.ROLE_CHECK_MENU_ITEM or \
+		x.role == pyatspi.ROLE_RADIO_MENU_ITEM) and utils.equalsOrMatches(x.name, path[-1]) and x.showing, recursive=False)
         item.click()
 
         return item

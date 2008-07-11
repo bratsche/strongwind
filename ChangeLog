@@ -1,3 +1,8 @@
+2008-07-11  Jonathan Tai  <jon@tgpsolutions.com>
+
+	* strongwind/accessibles.py: Add support for radio menu items or menu
+	  items with children in MenuBar class.  (#542458, Brian G. Merrell)
+
 2008-07-10  Jonathan Tai  <jon@tgpsolutions.com>
 
 	* strongwind/accessibles.py: Have PushButton override __getattr__() to
