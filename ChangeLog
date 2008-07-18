@@ -1,3 +1,8 @@
+2008-07-18  Jonathan Tai  <jon@tgpsolutions.com>
+
+	* strongwind/accessibles.py: Add support labelledBy param in generated
+	  search functions.  (#543511, César Octavio López Natarén)
+
 2008-07-11  Jonathan Tai  <jon@tgpsolutions.com>
 
 	* strongwind/accessibles.py: Add support for radio menu items or menu

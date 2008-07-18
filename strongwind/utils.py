@@ -181,3 +181,16 @@ def takeScreenshot(path):
 
     assert os.path.exists(path)
 
+def labelledBy(acc, label):
+    if label is None:
+        return True
+
+    for relation in acc.getRelationSet():
+        if relation.getRelationType() == pyatspi.RELATION_LABELLED_BY:
+            for i in range(relation.getNTargets()):
+                target = relation.getTarget(i)
+
+                if target.name == label:
+                    return True
+
+    return False

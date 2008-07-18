@@ -119,6 +119,10 @@ class Accessible(object):
             return self._accessible.queryText().caretOffset
         elif attr == 'characterCount':
             return self._accessible.queryText().characterCount
+        elif attr == 'getRelationSet':
+            # Never change this line to: self._accessible.queryAccessible().getRelationSet
+            # unexpected problems result from that.
+            return self._accessible.getRelationSet
         elif attr == 'app':
             try:
                 return cache.getApplicationById(self._accessible.getApplication().id)
@@ -174,9 +178,10 @@ class Accessible(object):
                 v = vars(pyatspi)
                 if v.has_key(a):
                     # generate a function on-the-fly and return it
-                    def findMethod(name, logName=None, checkShowing=True, retry=True, recursive=True, breadthFirst=True, raiseException=True, setReference=False):
+                    def findMethod(name, logName=None, checkShowing=True, retry=True, recursive=True, breadthFirst=True, raiseException=True, setReference=False, labelledBy=None):
                         dontCheckShowing = not checkShowing
-                        y = utils.findDescendant(self, lambda x: x.role == v[a] and utils.equalsOrMatches(x.name, name) and (dontCheckShowing or x.showing), \
+                        y = utils.findDescendant(self, lambda x: x.role == v[a] and utils.equalsOrMatches(x.name, name) and (dontCheckShowing or x.showing) \
+                                                     and utils.labelledBy(x, labelledBy),
                             retry=retry, recursive=recursive, breadthFirst=breadthFirst, raiseException=raiseException)
 
                         # don't try promoting y if it's None
