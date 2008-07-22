@@ -1,3 +1,8 @@
+2008-07-21  Jonathan Tai  <jon@tgpsolutions.com>
+
+	* strongwind/accessibles.py: Bind GtkColorSelectionDialog by adding
+	  ColorChooser accessible.  (#544065, César Octavio López Natarén)
+
 2008-07-18  Jonathan Tai  <jon@tgpsolutions.com>
 
 	* strongwind/accessibles.py: Add support labelledBy param in generated

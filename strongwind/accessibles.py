@@ -313,7 +313,9 @@ class Accessible(object):
             pyatspi.ROLE_TABLE_CELL: '',
             pyatspi.ROLE_TEXT: 'text field',
             pyatspi.ROLE_TOOL_BAR: 'toolbar',
-            pyatspi.ROLE_WINDOW: 'context menu'}
+            pyatspi.ROLE_WINDOW: 'context menu',
+            # In Gtk+, the color selection dialog has the ATK role ROLE_COLOR_CHOOSER
+            pyatspi.ROLE_COLOR_CHOOSER: 'dialog'}
 
         try:
             name = self.logName
@@ -1092,3 +1094,39 @@ class ComboBox(Accessible):
 
         return item
 
+# In Gtk+, the color selection dialog has the ATK role ROLE_COLOR_CHOOSER
+class ColorChooser(Dialog):
+    def _isDialog(self):
+        # In Gtk+, the color selection dialog has the ATK role ROLE_COLOR_CHOOSER, 
+        # but inside the dialog is another widget that has the same role.  We
+	# only want to behave like a color choose dialog if we're dealing with
+	# the dialog (the outer widget).
+        return self.parent.role == pyatspi.ROLE_APPLICATION
+
+    def __init__(self, accessible):
+        super(ColorChooser, self).__init__(accessible)
+
+        if self._isDialog():
+            self.hue = self.findSpinButton(None, labelledBy='Hue:')
+            self.saturation = self.findSpinButton(None, labelledBy='Saturation:')
+            self.val = self.findSpinButton(None, labelledBy='Value:')
+            self.red = self.findSpinButton(None, labelledBy='Red:')
+            self.green = self.findSpinButton(None, labelledBy='Green:')
+            self.blue = self.findSpinButton(None, labelledBy='Blue:')
+            self.colorName = self.findText(None, labelledBy='Color name:')
+
+    def selectColorRGB(self, rgbValues):
+        if not self._isDialog():
+            raise NotImplementedError
+
+        self.red.value = rgbValues[0]
+        self.green.value = rgbValues[1]
+        self.blue.value = rgbValues[2]
+
+    def selectColorHSV(self, hsvValues):
+        if not self._isDialog():
+            raise NotImplementedError
+
+        self.hue.value = hsvValues[0]
+        self.saturation.value = hsvValues[1]
+        self.val.value = hsvValues[2]
