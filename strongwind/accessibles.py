@@ -276,6 +276,25 @@ class Accessible(object):
 
                     return assertMethod
 
+            # bind actions, e.g., click, toggle, etc.
+            try:
+                iaction = self._accessible.queryAction()
+                for i in xrange(iaction.nActions):
+                    if utils.toVarName(iaction.getName(i)) == attr:
+                        def doActionMethod():
+                            def sensitive():
+                                return self.sensitive
+    
+                            if not utils.retryUntilTrue(sensitive):
+                                raise errors.NotSensitiveError
+    
+                            iaction.doAction(i)
+    
+                        return doActionMethod
+            except NotImplementedError:
+                # the accessible doesn't even implement the action interface, so it has no actions.  don't do any magic bindings
+                pass
+
             if self.__dict__.has_key(attr):
                 return self.__dict__[attr]
 
@@ -449,7 +468,12 @@ class Accessible(object):
 
     # interface methods
     def _doAction(self, action):
-        'Wrapper for doAction method in IAction interface'
+        '''
+        Wrapper for doAction method in IAction interface
+
+        All actions are now bound automagically; this method is deprecated and
+        may be removed in the future.
+        '''
 
         iaction = self._accessible.queryAction()
 
@@ -462,21 +486,6 @@ class Accessible(object):
                     raise errors.NotSensitiveError
 
                 iaction.doAction(i)
-
-    def click(self):
-        "Convenience wrapper for _doAction('click')"
-
-        self._doAction('click')
-
-    def activate(self):
-        "Convenience wrapper for _doAction('activate')"
-
-        self._doAction('activate')
-
-    def toggle(self):
-        "Convenience wrapper for _doAction('toggle')"
-
-        self._doAction('toggle')
 
     def grabFocus(self):
         'Wrapper for grabFocus method in IComponent interface'
@@ -977,7 +986,7 @@ class TableCell(Accessible):
             procedurelogger.action('Double-click %s.' % self, self)
 
         self.grabFocus()
-        super(TableCell, self).activate()
+        self.__getattr__('activate')()
 
     def typeText(self, text, log=True):
         'Type text into the table cell'
@@ -1004,9 +1013,6 @@ class TableCell(Accessible):
 
         super(TableCell, self).mouseClick(button=button, xOffset=xOffset, yOffset=yOffset)
 
-    def expandOrContract(self):
-        self._doAction('expand or contract')
-
 class Button(Accessible): # ROLE_BUTTON doesn't actually exist, this is just used as a base class for the following classes
     def click(self, log=True):
         'Click the button'
@@ -1014,7 +1020,7 @@ class Button(Accessible): # ROLE_BUTTON doesn't actually exist, this is just use
         if log:
             procedurelogger.action('Click the %s.' % self, self)
 
-        super(Button, self).click()
+        self.__getattr__('click')()
 
 class PushButton(Button):
     def __getattr__(self, attr):

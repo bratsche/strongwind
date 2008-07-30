@@ -1,3 +1,10 @@
+2008-07-30  Jonathan Tai  <jon@tgpsolutions.com>
+
+	* strongwind/accessibles.py: Bind actions on-the-fly.  Remove click(),
+	  toggle(), and activate() - they will be generated and returned
+	  on-the-fly from now on.  Deprecate _doAction(), since it should not
+	  longer be required.  (#545388)
+
 2008-07-21  Jonathan Tai  <jon@tgpsolutions.com>
 
 	* strongwind/accessibles.py: Bind GtkColorSelectionDialog by adding
