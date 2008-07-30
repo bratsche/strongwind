@@ -953,6 +953,12 @@ class TreeTable(Table):
         Path must be an array of strings, regular expressions are not supported.
         '''
 
+        if type(path) != type(['l']):
+            raise TypeError, 'path argument must be a list'
+
+        if type(path) != type(['l']):
+            raise TypeError, 'path argument must be a list'
+
         for row in path[0:-1]:
             sleep(config.MEDIUM_DELAY)
             super(TreeTable, self).select(row).expandOrContract()
@@ -1065,6 +1071,9 @@ class MenuBar(Accessible):
         Path must be an array of strings; regular expressions are not supported.
         '''
 
+        if type(path) != type(['l']):
+            raise TypeError, 'path argument must be a list'
+
         if log:
             procedurelogger.action('Under the %s menu, select %s.' % (' => '.join(path[0:-1]), path[-1].replace('...', '')), self)
 
@@ -1082,6 +1091,9 @@ class MenuBar(Accessible):
 
         Path must be an array of strings; regular expressions are not supported.
         '''
+
+        if type(path) != type(['l']):
+            raise TypeError, 'path argument must be a list'
 
         procedurelogger.action('Open the %s menu.' % ' => '.join(path), self)
 
