@@ -334,7 +334,9 @@ class Accessible(object):
             pyatspi.ROLE_TOOL_BAR: 'toolbar',
             pyatspi.ROLE_WINDOW: 'context menu',
             # In Gtk+, the color selection dialog has the ATK role ROLE_COLOR_CHOOSER
-            pyatspi.ROLE_COLOR_CHOOSER: 'dialog'}
+            pyatspi.ROLE_COLOR_CHOOSER: 'dialog',
+            # In Gtk+, the font selection dialog has the ATK role ROLE_FONT_CHOOSER
+            pyatspi.ROLE_FONT_CHOOSER: 'dialog'}
 
         try:
             name = self.logName
@@ -1137,14 +1139,33 @@ class ColorChooser(Dialog):
         if not self._isDialog():
             raise NotImplementedError
 
+        procedurelogger.action('Select the color with RGB value of: (%s, %s, %s).' % (rgbValues[0], rgbValues[1], rgbValues[2]))
         self.red.value = rgbValues[0]
         self.green.value = rgbValues[1]
         self.blue.value = rgbValues[2]
+        procedurelogger.expectedResult('The color with RGB value of (%s, %s, %s) is selected.' % (rgbValues[0], rgbValues[1], rgbValues[2]))
 
     def selectColorHSV(self, hsvValues):
         if not self._isDialog():
             raise NotImplementedError
 
+        procedurelogger.action('Select the color with HSV value of: (%s, %s, %s).' % (hsvValues[0], hsvValues[1], hsvValues[2]))
         self.hue.value = hsvValues[0]
         self.saturation.value = hsvValues[1]
         self.val.value = hsvValues[2]
+        procedurelogger.expectedResult('The color with HSV value of (%s, %s, %s) is selected.' % (hsvValues[0], hsvValues[1], hsvValues[2]))
+
+class Fontchooser(Dialog):
+    def __init__(self, accessible):
+        super(Fontchooser, self).__init__(accessible)
+
+        self.families = self.findTable(None, labelledBy='Family:')
+        self.styles = self.findTable(None, labelledBy='Style:')
+        self.sizes = self.findTable(None, labelledBy='Size:')
+
+    def selectFont(self, family, style, size):
+        procedurelogger.action("Select font '%s' with style '%s' on size '%s'." % (family, style, size))
+        self.families.select(family, log=False)
+        self.styles.select(style, log=False)
+        self.sizes.select(size, log=False)
+        procedurelogger.expectedResult("The font '%s' with style '%s' on size '%s' is selected." % (family, style, size))
