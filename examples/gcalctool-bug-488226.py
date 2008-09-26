@@ -18,7 +18,6 @@ app.calculatorFrame.changeMode('Advanced', assertModeChanged=False)
 # handle the Change Mode dialog ourselves...
 dialog = app.findDialog(None, logName='Changing Modes Clears Calculation')
 
-procedurelogger.action('Press Esc.')
 dialog.keyCombo('Esc')
 
 dialog.assertClosed()

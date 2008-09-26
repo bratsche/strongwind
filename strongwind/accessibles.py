@@ -394,8 +394,11 @@ class Accessible(object):
         return rv
 
     # adapted from script_playback.py, originally named type
-    def typeText(self, text):
+    def typeText(self, text, log=True):
         'Turns text (a string) into a series of keyboard events'
+
+        if log:
+            procedurelogger.action('Type "%s".' % text, self)
 
         text_syms = map(self._charToKeySym, text)
 
@@ -404,8 +407,14 @@ class Accessible(object):
             pyatspi.Registry.generateKeyboardEvent(key, None, pyatspi.KEY_SYM)
 
     # adapted from script_playback.py
-    def keyCombo(self, combo, grabFocus=True):
-        'Focus this Accessible and press a combination of keys simultaneously'
+    def keyCombo(self, combo, grabFocus=True, log=True):
+        '''
+        Optionally focus this Accessible and press a single key or a combination
+        of keys simultaneously.
+        '''
+
+        if log:
+            procedurelogger.action('Press %s.' % combo, self)
 
         import gtk.gdk
 
@@ -460,8 +469,20 @@ class Accessible(object):
             sleep(config.KEYCOMBO_DELAY)
             pyatspi.Registry.generateKeyboardEvent(key_code, None, pyatspi.KEY_RELEASE)
 
-    def mouseClick(self, button=1, xOffset=0, yOffset=0):
-        'Synthesize a mouse click on this Accessible'
+    def mouseClick(self, button=1, xOffset=0, yOffset=0, log=True):
+        'Synthesize a left, middle, or right mouse click on this Accessible'
+
+        if log:
+            button_name = "Click"
+
+            if button == 1:
+                button_name = "Left click"
+            elif button == 2:
+                button_name = "Middle click"
+            elif button == 3:
+                button_name = "Right click"
+                
+            procedurelogger.action('%s the %s.' % (button_name, self), self)
 
         bbox = self.extents
         x = bbox.x + (bbox.width / 2) + xOffset
@@ -668,7 +689,6 @@ class Frame(Accessible):
     def altF4(self, assertClosed=True):
         'Press <Alt>F4'
 
-        procedurelogger.action('Press <Alt>F4.', self)
         self.keyCombo('<Alt>F4')
 
         if assertClosed: self.assertClosed()
@@ -722,7 +742,6 @@ class Dialog(Accessible):
     def altF4(self, assertClosed=True):
         'Press <Alt>F4'
 
-        procedurelogger.action('Press <Alt>F4.', self)
         self.keyCombo('<Alt>F4')
 
         if assertClosed: self.assertClosed()
@@ -999,27 +1018,16 @@ class TableCell(Accessible):
     def typeText(self, text, log=True):
         'Type text into the table cell'
 
-        self.mouseClick()
+        # Click the table cell.  If the table cell is editable, this should trigger the 
+        # "edit mode".  If you just want to select the table cell, use select() instead.
+        self.mouseClick(log=log)
 
         if log:
             procedurelogger.action('Enter "%s" into %s.' % (text, self), self)
 
         sleep(config.SHORT_DELAY)
-        super(TableCell, self).typeText(text)
+        super(TableCell, self).typeText(text, False)
         pyatspi.Registry.generateKeyboardEvent(self._charToKeySym('Return'), None, pyatspi.KEY_SYM)
-
-    def mouseClick(self, button=1, xOffset=0, yOffset=0, log=True):
-        '''
-        Click the table cell
-
-        If the table cell is editable, this should trigger the "edit mode".  If
-        you just want to select the table cell, use select() instead.
-        '''
-
-        if log:
-            procedurelogger.action('Click %s.' % self, self)
-
-        super(TableCell, self).mouseClick(button=button, xOffset=xOffset, yOffset=yOffset)
 
 class Button(Accessible): # ROLE_BUTTON doesn't actually exist, this is just used as a base class for the following classes
     def click(self, log=True):
