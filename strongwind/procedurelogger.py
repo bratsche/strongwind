@@ -42,6 +42,7 @@ calls are not always necessary, either.
 
 import os
 import sys
+import time
 
 try:
     import yaml
@@ -70,12 +71,14 @@ import utils
 import watchdog
 
 
-
 _procedures = []
 _actionBuffer = ''
 _expectedResultBuffer = ''
 
 _oldParents = []
+
+_start_time = time.time()
+
 
 # roles we want to search up the tree for
 _containerParentRoles = [
@@ -247,6 +250,9 @@ def save():
     'Save logged actions and expected results to an XML file'
 
     global _expectedResultBuffer
+    global _start_time
+
+    elapsed_time = time.time() - _start_time
 
     try:
         _expectedResultBuffer += ''.join(traceback.format_exception(sys.last_type, sys.last_value, sys.last_traceback))
@@ -282,6 +288,8 @@ def save():
         if config.TAKE_SCREENSHOTS:
             ET.SubElement(step, 'screenshot').text = p[2]
 
+    ET.SubElement(root, 'time').text = str(elapsed_time)
+
     assert os.path.isdir(config.OUTPUT_DIR)
 
     file = open(os.path.join(config.OUTPUT_DIR, 'procedures.xml'), 'w')
@@ -289,8 +297,6 @@ def save():
     file.write('<?xml-stylesheet type="text/xsl" href="procedures.xsl"?>')
     ET.ElementTree(root).write(file)
     file.close()
-
-
 
 def _getTestInfo():
     "Inspect the file being executed to determine the test's name, description, and parameters"

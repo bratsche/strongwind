@@ -1,3 +1,9 @@
+2008-10-08  Jonathan Tai  <jon@tgpsolutions.com>
+
+	* strongwind/procedurelogger.py:
+	* resources/procedures.xsl:
+	Keep track of how long it takes for a test to run (#555286, Brian G. Merrell)
+
 2008-09-26  Jonathan Tai  <jon@tgpsolutions.com>
 
 	* strongwind/accessibles.py: Add default action logging to typeText,
