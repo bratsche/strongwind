@@ -469,6 +469,15 @@ class Accessible(object):
             sleep(config.KEYCOMBO_DELAY)
             pyatspi.Registry.generateKeyboardEvent(key_code, None, pyatspi.KEY_RELEASE)
 
+    def mouseMove(self, xOffset=0, yOffset=0, log=True):
+        'Move the mouse cursor to the Accessible' 
+
+        if log:
+            procedurelogger.action('Move the mouse cursor to the %s.' % (self), self)
+
+        x, y = self._getAccessibleCenter()
+        pyatspi.Registry.generateMouseEvent(x + xOffset, y + yOffset, 'abs')
+
     def mouseClick(self, button=1, xOffset=0, yOffset=0, log=True):
         'Synthesize a left, middle, or right mouse click on this Accessible'
 
@@ -484,10 +493,16 @@ class Accessible(object):
                 
             procedurelogger.action('%s the %s.' % (button_name, self), self)
 
+        x, y = self._getAccessibleCenter()
+        pyatspi.Registry.generateMouseEvent(x + xOffset, y + yOffset, 'b%dc' % button)
+
+    def _getAccessibleCenter(self):
+        'Calculate and return the x,y coordinates of the visual center of the accessible'
+
         bbox = self.extents
-        x = bbox.x + (bbox.width / 2) + xOffset
-        y = bbox.y + (bbox.height / 2) + yOffset
-        pyatspi.Registry.generateMouseEvent(x, y, 'b%dc' % button)
+        x = bbox.x + (bbox.width / 2)
+        y = bbox.y + (bbox.height / 2)
+        return (x, y)
 
     # interface methods
     def _doAction(self, action):
