@@ -1,3 +1,8 @@
+2009-01-15  Brian G. Merrell  <bgmerrell@novell.com>
+
+	* strongwind/accessibles.py: Implement insertText and deleteText
+	methods from IAccessibleEditableText. (#567884)
+
 2008-12-02  Brian G. Merrell  <bgmerrell@novell.com>
 
 	* strongwind/accessibles.py: Provide a method that can move the mouse

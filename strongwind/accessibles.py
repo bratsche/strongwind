@@ -393,6 +393,40 @@ class Accessible(object):
             rv = getattr(gtk.keysyms, key)
         return rv
 
+    def insertText(self, text, offset=0, log=True):
+        '''
+        Insert the specified text into an editable text accessible using
+        an optional offset from the first index of the accessible.  This method
+        uses the IAccessibleEditableText insertText method to insert the
+        specified text.
+        '''
+
+        if log:
+            procedurelogger.action('Enter "%s" into %s.' % (text, self), self)
+
+        ieditable = self._accessible.queryEditableText()
+        ieditable.insertText(offset, text, len(text)) 
+
+    def deleteText(self, start=0, end=None, log=True):
+        '''
+        Delete the text of an editable text accessible.  By default all text is
+        deleted.  Optionally, a start and end index can be specified to delete
+        a range of text.  This method uses the IAccessibleEditableText
+        deleteText method to delete the text.
+        '''
+
+        ieditable = self._accessible.queryEditableText()
+
+        if end is None:
+            end = ieditable.characterCount
+
+        text = ieditable.getText(start, end)
+
+        if log:
+            procedurelogger.action('Delete "%s" from %s.' % (text, self), self)
+
+        ieditable.deleteText(start, end)
+
     # adapted from script_playback.py, originally named type
     def typeText(self, text, log=True):
         'Turns text (a string) into a series of keyboard events'
