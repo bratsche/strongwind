@@ -1,3 +1,9 @@
+2009-02-24  Andrés G. Aragoneses  <aaragoneses@novell.com>
+
+	* strongwind/accessibles.py: Make 'imageSize' attrib available 
+	for any sub-class of Button. Make ToggleButton inherit from Button.
+	(#572995)
+
 2009-01-15  Brian G. Merrell  <bgmerrell@novell.com>
 
 	* strongwind/accessibles.py: Implement insertText and deleteText
