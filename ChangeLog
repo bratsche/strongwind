@@ -1,3 +1,14 @@
+2009-04-07  Brian G. Merrell  <bgmerrell@novell.com>
+	
+	* strongwind/accessibles.py: No longer cache the log name as the
+	accessible's name when Strongwind can't find a cached log name.  
+	Instead, return the accessible's name property when the cached log name
+	cannot be found. This fix will avoid the logName being outdate if
+	an accessible changes its name.  (#577761)
+	* strongwind/watchdog.py: Simply refer to the AttributeError exception 
+	as AttributeError instead of exceptions.AttributeError.  Exceptions are
+	provided in the built-in namespace. (#574965)
+
 2009-02-24  Andrés G. Aragoneses  <aaragoneses@novell.com>
 
 	* strongwind/accessibles.py: Make 'imageSize' attrib available 

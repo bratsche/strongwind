@@ -133,7 +133,7 @@ def _watchdog():
         # so try-catch the next statement and abort if we get an AttributeError
         try:
             _terminateLock.acquire()
-        except exceptions.AttributeError:
+        except AttributeError:
             return
 
         _counterLock.acquire()

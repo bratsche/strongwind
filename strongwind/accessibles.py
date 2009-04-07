@@ -95,9 +95,9 @@ class Accessible(object):
         elif attr == 'name':
             return self._accessible.name
         elif attr == 'logName':
-            if not self.__dict__.has_key('logName'):
-                self.__dict__['logName'] = self._accessible.name
-            return self.__dict__['logName']
+            if self.__dict__.has_key('logName'):
+                return self.__dict__['logName']
+            return self._accessible.name
         elif attr == 'description':
             return self._accessible.description
         elif attr == 'parent':
