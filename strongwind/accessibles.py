@@ -281,15 +281,22 @@ class Accessible(object):
                 iaction = self._accessible.queryAction()
                 for i in xrange(iaction.nActions):
                     if utils.toVarName(iaction.getName(i)) == attr:
-                        def doActionMethod():
+                        # For most applications, you should not pass log=True
+                        # into this method.  If you want automatic logging, you
+                        # probably want to extend the Accessible class and add
+                        # logging in a widget-specific class.  For an example,
+                        # see the click() method in the Button class.
+                        def doActionMethod(log=False):
                             def sensitive():
                                 return self.sensitive
-    
+
                             if not utils.retryUntilTrue(sensitive):
                                 raise errors.NotSensitiveError
-    
+                            if log:
+                                procedurelogger.action('Perform "%s" action for %s.' % (iaction.getName(i), self))
+
                             iaction.doAction(i)
-    
+
                         return doActionMethod
             except NotImplementedError:
                 # the accessible doesn't even implement the action interface, so it has no actions.  don't do any magic bindings
