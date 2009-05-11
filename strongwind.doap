@@ -1,0 +1,27 @@
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">strongwind</name>
+  <shortdesc xml:lang="en">GUI test automation framework</shortdesc>
+  <homepage rdf:resource="http://medsphere.org/community/project/strongwind" />
+  <download-page rdf:resource="http://medsphere.org/download/project/strongwind" />
+  <bug-database rdf:resource="http://bugzilla.gnome.org/browse.cgi?product=strongwind" />
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Jonathan Tai</foaf:name>
+      <gnome:userid>jtai</gnome:userid>
+    </foaf:Person>
+    <foaf:Person>
+      <foaf:name>Brad Taylor</foaf:name>
+      <gnome:userid>btaylor</gnome:userid>
+    </foaf:Person>
+    <foaf:Person>
+      <foaf:name>Cody Russell</foaf:name>
+      <gnome:userid>bratsche</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+</Project>
