@@ -235,8 +235,15 @@ def launchApplication(args=[], name=None, find=None, cwd=None, env=None, wait=co
     # instance of the application already open
     existingApp = findAppWithLargestId(_desktop, find)
 
+    def group_setup():
+        '''
+        Ensure that all forked processes keep the same process group so that
+        they can be killed with os.killpg(proc.pid, signal.SIGTERM) later.
+        '''
+        os.setpgid(0, 0)
+
     # launch the application
-    subproc = subprocess.Popen(args, cwd=cwd, env=env)
+    subproc = subprocess.Popen(args, cwd=cwd, env=env, preexec_fn=group_setup)
 
     # wait for the application to launch and for the applications list to
     # settle.  if we try to list the desktop's applications too soon, we get
