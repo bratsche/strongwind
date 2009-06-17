@@ -1,3 +1,8 @@
+2009-06-17  Brad Taylor  <brad@getcoded.net>
+
+	* strongwind/cache.py: Disable setting the process group by default as
+	it can cause problems with applications that don't use wrapper scripts.
+
 2009-06-16  Brad Taylor  <brad@getcoded.net>
 
 	* strongwind/cache.py: Set the process group of our launched

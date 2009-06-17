@@ -164,7 +164,7 @@ def getApplicationsList():
 
     return _applications.values()
 
-def launchApplication(args=[], name=None, find=None, cwd=None, env=None, wait=config.MEDIUM_DELAY, cache=True, logString=None):
+def launchApplication(args=[], name=None, find=None, cwd=None, env=None, wait=config.MEDIUM_DELAY, cache=True, logString=None, setpgid=False):
     '''
     Launch an application with accessibility enabled
 
@@ -242,8 +242,12 @@ def launchApplication(args=[], name=None, find=None, cwd=None, env=None, wait=co
         '''
         os.setpgid(0, 0)
 
+    preexec_fn = None
+    if setpgid:
+        preexec_fn = group_setup
+
     # launch the application
-    subproc = subprocess.Popen(args, cwd=cwd, env=env, preexec_fn=group_setup)
+    subproc = subprocess.Popen(args, cwd=cwd, env=env, preexec_fn=preexec_fn)
 
     # wait for the application to launch and for the applications list to
     # settle.  if we try to list the desktop's applications too soon, we get
