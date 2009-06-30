@@ -13,7 +13,7 @@ automatically.
 
 from distutils.core import setup
 
-setup(name='Strongwind',
+setup(name='strongwind',
       version='0.9',
       description='GUI Test Automation Framework',
       author='Jonathan Tai',
