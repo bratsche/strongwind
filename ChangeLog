@@ -1,3 +1,7 @@
+2009-09-08  Brad Taylor  <brad@getcoded.net>
+
+	* strongwind/events.py: Add event listening support.
+
 2009-06-17  Brad Taylor  <brad@getcoded.net>
 
 	* strongwind/cache.py: Disable setting the process group by default as
