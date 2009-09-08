@@ -99,7 +99,7 @@ class EventListener(threading.Thread):
 
         @param targets: the accessibles to listen to
         '''
-        if type(targets) != type(list()):
+        if not isinstance(targets, list):
             targets = (targets,)
 
         with self.cond:
@@ -158,7 +158,7 @@ class EventListener(threading.Thread):
         @rtype: boolean
         '''
         num = self._getNumEvents(self._unwrapAccessible(target), type)
-        if qty == None:
+        if qty is None:
             return num > 0
         return qty == num
 
@@ -196,7 +196,7 @@ class EventListener(threading.Thread):
         '''
         with self.cond:
             if target:
-                if not target in self.events:
+                if target not in self.events:
                     return 0
 
                 if type:
@@ -219,7 +219,7 @@ class EventListener(threading.Thread):
                 self.cond.notifyAll()
         return False
 
-    def _unwrapAccessible(acc):
-        if type(acc) == type(accessibles.Accessible()):
+    def _unwrapAccessible(self, acc):
+        if isinstance(acc, accessibles.Accessible):
             return acc._accessible
         return acc
