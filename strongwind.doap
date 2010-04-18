@@ -15,10 +15,14 @@
       <foaf:name>Jonathan Tai</foaf:name>
       <gnome:userid>jtai</gnome:userid>
     </foaf:Person>
+  </maintainer>
+  <maintainer>
     <foaf:Person>
       <foaf:name>Brad Taylor</foaf:name>
       <gnome:userid>btaylor</gnome:userid>
     </foaf:Person>
+  </maintainer>
+  <maintainer>
     <foaf:Person>
       <foaf:name>Cody Russell</foaf:name>
       <gnome:userid>bratsche</gnome:userid>
